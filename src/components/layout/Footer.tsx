@@ -1,14 +1,43 @@
 "use client";
 
 import { useTheme } from "@/lib/ThemeContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Footer() {
-  const { theme, setTheme } = useTheme();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+  // 使用可选链避免在useTheme不可用时出错
+  let theme = "light";
+  let setTheme = (t: string) => {};
+  
+  try {
+    // 在mounted后才尝试使用useTheme
+    if (mounted) {
+      const themeContext = useTheme();
+      theme = themeContext.theme;
+      setTheme = themeContext.setTheme;
+    }
+  } catch (e) {
+    console.log("Theme context not available yet");
+  }
+  
+  // 等待客户端渲染完成
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // 未挂载时显示骨架
+  if (!mounted) {
+    return (
+      <footer className="py-8 h-64 footer-override">
+        <div className="max-w-6xl mx-auto px-4 h-full"></div>
+      </footer>
+    );
+  }
 
   return (
-    <footer className="bg-white dark:bg-black text-gray-800 dark:text-white py-8 h-64">
+    <footer className="py-8 h-64 footer-override">
       <div className="max-w-6xl mx-auto px-4 h-full flex flex-col justify-between">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -20,7 +49,7 @@ export default function Footer() {
           
           <div className="relative mr-[20px]">
             <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => setMenuOpen(!menuOpen)}
               className="px-4 py-2 rounded border dark:border-gray-700 flex items-center"
             >
               {theme.charAt(0).toUpperCase() + theme.slice(1)}
@@ -29,13 +58,13 @@ export default function Footer() {
               </svg>
             </button>
             
-            {isMenuOpen && (
+            {menuOpen && (
               <div className="absolute bottom-full mb-1 right-0 w-36 bg-white dark:bg-gray-800 shadow-lg rounded border dark:border-gray-700">
                 <ul>
                   <li>
                     <button 
                       className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 ${theme === 'auto' ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
-                      onClick={() => { setTheme('auto'); setIsMenuOpen(false); }}
+                      onClick={() => { setTheme('auto'); setMenuOpen(false); }}
                     >
                       Auto
                     </button>
@@ -43,7 +72,7 @@ export default function Footer() {
                   <li>
                     <button 
                       className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 ${theme === 'light' ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
-                      onClick={() => { setTheme('light'); setIsMenuOpen(false); }}
+                      onClick={() => { setTheme('light'); setMenuOpen(false); }}
                     >
                       Light
                     </button>
@@ -51,7 +80,7 @@ export default function Footer() {
                   <li>
                     <button 
                       className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 ${theme === 'dark' ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
-                      onClick={() => { setTheme('dark'); setIsMenuOpen(false); }}
+                      onClick={() => { setTheme('dark'); setMenuOpen(false); }}
                     >
                       Dark
                     </button>

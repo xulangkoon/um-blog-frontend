@@ -10,9 +10,9 @@ export default function MainLayout({
 }) {
   return (
     <ThemeProvider>
-      <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+      <div className="flex flex-col min-h-screen main-layout-override">
         <Navbar />
-        <main className="flex-grow pt-[96px]">{children}</main>
+        <main className="flex-grow pt-24 pb-12">{children}</main>
         <Footer />
       </div>
     </ThemeProvider>

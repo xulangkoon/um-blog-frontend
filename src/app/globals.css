@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "@radix-ui/themes/styles.css";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
@@ -31,12 +33,54 @@ body {
   color: var(--foreground);
 }
 
+/* Navbar主题样式 */
 .navbar-override {
   background: white !important;
   background-color: white !important;
 }
 
+.navbar-override a,
+.navbar-override span {
+  color: #1f2937 !important; /* 深色文本，在浅色背景下 */
+}
+
 .dark .navbar-override {
   background: #1e1e1e !important;
   background-color: #1e1e1e !important;
+}
+
+.dark .navbar-override a,
+.dark .navbar-override span {
+  color: white !important; /* 白色文本，在深色背景下 */
+}
+
+/* 特殊样式处理：链接文本 */
+.navbar-override .text-purple-600 {
+  color: #9333ea !important; /* 保留紫色高亮 */
+}
+
+.dark .navbar-override .text-purple-400 {
+  color: #c084fc !important; /* 深色模式下的紫色 */
+}
+
+/* MainLayout主题样式 */
+.main-layout-override {
+  background-color: white !important;
+  color: #171717 !important;
+}
+
+.dark .main-layout-override {
+  background-color: #111827 !important;
+  color: white !important;
+}
+
+/* Footer主题样式 */
+.footer-override {
+  background-color: white !important;
+  color: #171717 !important;
+}
+
+.dark .footer-override {
+  background-color: #000000 !important;
+  color: white !important;
 }

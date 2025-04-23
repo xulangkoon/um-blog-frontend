@@ -14,6 +14,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
 
   // 初始化主题
   useEffect(() => {
@@ -21,6 +22,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (storedTheme) {
       setTheme(storedTheme);
     }
+    setMounted(true);
   }, []);
 
   // 计算实际应用的主题
@@ -35,6 +37,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // 当主题变化时保存到localStorage
   useEffect(() => {
+    if (!mounted) return;
+    
     localStorage.setItem("theme", theme);
     
     // 应用主题到document
@@ -45,12 +49,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.remove("dark");
       document.documentElement.classList.add("light");
     }
-  }, [theme, resolvedTheme]);
+  }, [theme, resolvedTheme, mounted]);
 
   const value = {
     theme,
     setTheme,
   };
+  
+  // 避免在初始渲染时闪烁
+  if (!mounted) {
+    // 返回只包含children的结构，但不执行任何主题切换
+    return <>{children}</>;
+  }
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

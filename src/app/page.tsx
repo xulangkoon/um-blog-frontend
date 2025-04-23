@@ -27,17 +27,17 @@ export default function Home() {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="w-full max-w-6xl mx-auto p-4">
       {/* 欢迎部分 */}
       <section className="py-12 text-center">
-        <h1 className="text-4xl font-bold mb-4">欢迎来到UM Blog</h1>
+        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">欢迎来到UM Blog</h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           分享Web开发、编程技巧以及技术经验
         </p>
         <div className="mt-8">
           <Link 
             href="/posts" 
-            className="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition"
+            className="inline-block px-6 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
           >
             浏览所有文章
           </Link>
@@ -46,17 +46,17 @@ export default function Home() {
 
       {/* 特色文章部分 */}
       <section className="mt-16">
-        <h2 className="text-2xl font-bold mb-6">特色文章</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">特色文章</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredPosts.map((post) => (
-            <div key={post.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+            <div key={post.id} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
               <div className="p-6">
-                <p className="text-sm text-gray-500 mb-2">{post.date}</p>
-                <h3 className="text-xl font-bold mb-2">{post.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{post.date}</p>
+                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{post.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{post.excerpt}</p>
                 <Link
                   href={`/posts/${post.slug}`}
-                  className="text-primary-600 hover:underline font-medium"
+                  className="text-purple-600 dark:text-purple-400 hover:underline font-medium"
                 >
                   阅读更多 →
                 </Link>
@@ -67,7 +67,7 @@ export default function Home() {
         <div className="mt-10 text-center">
           <Link 
             href="/posts" 
-            className="text-primary-600 hover:underline font-medium"
+            className="text-purple-600 dark:text-purple-400 hover:underline font-medium"
           >
             查看所有文章 →
           </Link>
