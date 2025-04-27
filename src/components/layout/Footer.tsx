@@ -12,13 +12,15 @@ export default function Footer() {
   let setTheme = (t: string) => {};
   
   try {
-    // 在mounted后才尝试使用useTheme
+    const themeContext = useTheme();
     if (mounted) {
-      const themeContext = useTheme();
       theme = themeContext.theme;
-      setTheme = themeContext.setTheme;
+      setTheme = (t: string) => {
+        themeContext.setTheme(t);
+      };
     }
-  } catch (e) {
+  } catch (error) {
+    // Theme context may not be available during SSR
     console.log("Theme context not available yet");
   }
   

@@ -30,8 +30,8 @@ export default function Home() {
     <div className="w-full max-w-6xl mx-auto p-4">
       {/* 欢迎部分 */}
       <section className="py-12 text-center">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">欢迎来到UM Blog</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <h1 className="text-4xl font-bold mb-4">欢迎来到UM Blog</h1>
+        <p className="text-xl max-w-2xl mx-auto">
           分享Web开发、编程技巧以及技术经验
         </p>
         <div className="mt-8">
@@ -51,9 +51,9 @@ export default function Home() {
           {featuredPosts.map((post) => (
             <div key={post.id} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
               <div className="p-6">
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{post.date}</p>
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{post.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{post.excerpt}</p>
+                <p className="text-sm mb-2">{post.date}</p>
+                <h3 className="text-xl font-bold mb-2">{post.title}</h3>
+                <p className="mb-4">{post.excerpt}</p>
                 <Link
                   href={`/posts/${post.slug}`}
                   className="text-purple-600 dark:text-purple-400 hover:underline font-medium"
