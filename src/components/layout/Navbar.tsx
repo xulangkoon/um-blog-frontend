@@ -25,6 +25,7 @@ export default function Navbar() {
             <span className="relative py-2 font-medium">首页</span>
             <span className="relative py-2 font-medium">文章</span>
             <span className="relative py-2 font-medium">关于</span>
+            <span className="relative py-2 font-medium">管理</span>
           </div>
         </div>
       </div>
@@ -78,6 +79,19 @@ export default function Navbar() {
             `}
           >
             关于
+          </Link>
+          <Link 
+            href="/admin" 
+            className={`relative py-2 font-medium no-underline transition-colors duration-300 
+              ${pathname === "/admin" 
+                ? "text-purple-600 dark:text-purple-400" 
+                : "text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"}
+              after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-purple-600 dark:after:bg-purple-400
+              after:transition-all after:duration-300
+              ${pathname === "/admin" ? "after:w-full" : "after:w-0 hover:after:w-full"}
+            `}
+          >
+            管理
           </Link>
         </div>
       </div>
