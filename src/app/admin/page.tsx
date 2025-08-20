@@ -5,6 +5,7 @@ import AdminLogin from "@/components/admin/AdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 
 export default function AdminPage() {
+  // 管理员登录状态
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,7 +54,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="admin-layout min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {!isAuthenticated ? (
         <AdminLogin onLoginSuccess={handleLoginSuccess} />
       ) : (
