@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/lib/ThemeContext";
+import { useTheme } from 'next-themes';
 import { useState, useEffect } from "react";
 
 export default function Footer() {
@@ -9,17 +9,18 @@ export default function Footer() {
   
   // 使用可选链避免在useTheme不可用时出错
   let theme = "light";
-  let setTheme = (t: string) => {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let setTheme = (_: string) => {};
   
   try {
     const themeContext = useTheme();
     if (mounted) {
-      theme = themeContext.theme;
-      setTheme = (t: string) => {
-        themeContext.setTheme(t);
+      theme = themeContext.theme || "light";
+      setTheme = (newTheme: string) => {
+        themeContext.setTheme(newTheme);
       };
     }
-  } catch (error) {
+  } catch {
     // Theme context may not be available during SSR
     console.log("Theme context not available yet");
   }
