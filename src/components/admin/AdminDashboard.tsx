@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTheme } from 'next-themes';
 import PostEditor from "@/components/admin/PostEditor";
 import PostList from "@/components/admin/PostList";
 
@@ -22,6 +23,28 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<'posts' | 'editor'>('posts');
   const [posts, setPosts] = useState<Post[]>([]);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  // 等待客户端渲染完成
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 点击外部关闭主题菜单
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (themeMenuOpen && !(event.target as Element).closest('.theme-menu')) {
+        setThemeMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [themeMenuOpen]);
 
   // 从localStorage加载文章数据
   useEffect(() => {
@@ -109,7 +132,7 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* 顶部导航栏 */}
       <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,6 +146,53 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 管理员已登录
               </span>
+              
+              {/* 主题切换按钮 */}
+               {mounted && (
+                 <div className="relative theme-menu">
+                  <button 
+                    onClick={() => setThemeMenuOpen(!themeMenuOpen)}
+                    className="px-3 py-2 rounded border border-gray-300 dark:border-gray-600 flex items-center text-sm bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+                  >
+                    {theme ? theme.charAt(0).toUpperCase() + theme.slice(1) : 'Auto'}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {themeMenuOpen && (
+                    <div className="absolute top-full mt-1 right-0 w-32 bg-white dark:bg-gray-800 shadow-lg rounded border border-gray-300 dark:border-gray-600 z-10">
+                      <ul>
+                        <li>
+                          <button 
+                            className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm ${theme === 'auto' ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
+                            onClick={() => { setTheme('auto'); setThemeMenuOpen(false); }}
+                          >
+                            Auto
+                          </button>
+                        </li>
+                        <li>
+                          <button 
+                            className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm ${theme === 'light' ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
+                            onClick={() => { setTheme('light'); setThemeMenuOpen(false); }}
+                          >
+                            Light
+                          </button>
+                        </li>
+                        <li>
+                          <button 
+                            className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm ${theme === 'dark' ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
+                            onClick={() => { setTheme('dark'); setThemeMenuOpen(false); }}
+                          >
+                            Dark
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+              
               <button
                 onClick={onLogout}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
