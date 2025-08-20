@@ -84,3 +84,14 @@ body {
   background-color: #000000 !important;
   color: white !important;
 }
+
+/* Admin页面主题样式 */
+.admin-layout {
+  background-color: #f9fafb !important; /* bg-gray-50 */
+  color: #111827 !important;
+}
+
+.dark .admin-layout {
+  background-color: #111827 !important; /* dark:bg-gray-900 */
+  color: white !important;
+}
