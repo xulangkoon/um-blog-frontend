@@ -16,8 +16,8 @@ export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
 
   // 这里使用简单的硬编码验证，实际项目中应该连接后端API
   // 为了安全，建议将这些凭据存储在环境变量中
-  const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin';
-  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'your_secure_password_here';
+  const ADMIN_USERNAME = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'xulangkoon';
+  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'cslXL.9727';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 min-h-screen">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
