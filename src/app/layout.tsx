@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from 'next-themes'
-import MainLayout from "@/components/layout/MainLayout";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors`}
       >
-        <ThemeProvider attribute="class" defaultTheme="auto" enableSystem={true}><MainLayout>{children}</MainLayout></ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}><ConditionalLayout>{children}</ConditionalLayout></ThemeProvider>
       </body>
     </html>
   );
