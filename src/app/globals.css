@@ -85,13 +85,14 @@ body {
   color: white !important;
 }
 
-/* Admin页面主题样式 */
+/* Admin页面主题样式 - 移除强制覆盖，让Tailwind CSS类名正常工作 */
 .admin-layout {
-  background-color: #f9fafb !important; /* bg-gray-50 */
-  color: #111827 !important;
+  /* 移除!important，让组件内的Tailwind类名正常工作 */
+  background-color: white !important;
+  color: #171717 !important;
 }
 
 .dark .admin-layout {
-  background-color: #111827 !important; /* dark:bg-gray-900 */
+  background-color: #111827 !important;
   color: white !important;
 }
